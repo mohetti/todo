@@ -38,3 +38,39 @@
     grid-area: rightrow;
     background-color: yellow;
 }
+
+#menu {
+    position: fixed;
+    z-index: 10000;
+    width: 150px;
+    background-color: #1b1a1a;
+    transform: scale(0);
+    transform-origin: top left;
+}
+
+#menu.active {
+    transform: scale(1);
+    transition: transform 200ms ease-in-out;
+}
+
+#menu .right-click-item {
+    padding: 8px 10px;
+    font-size: 15px;
+    color: #eee;
+}
+
+#menu .right-click-item:hover {
+    background-color: #555;
+    cursor: pointer;
+
+}
+
+#menu .right-click-item i {
+    display: inline-block;
+    margin-right: 5px;
+}
+
+#menu hr {
+    margin: 2px 0px;
+    border-color: #555;
+}
