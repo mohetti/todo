@@ -1,0 +1,44 @@
+/*
+<div id="left-row">
+      <div id="folder-container">
+        <div id="new-folder-container">
+          <input type="text" id="new-folder" placeholder="New Folder"></input>
+          <input type="submit" id="add-new-btn"></input>
+        </div>
+        <div id="folder-display-container">
+          <div class="folder">Folder 1</div>
+          <div class="folder">Folder 2</div>
+          <div class="folder">Folder 3</div>
+        </div>
+      </div>
+    </div>
+*/
+
+#folder-container {
+    display: grid;
+    grid-template-columns: 80% 20%;
+    grid-template-areas: 
+        "new-folder ."
+        "folder-display .";
+}
+
+#new-folder-container {
+    grid-area: new-folder;
+    margin-top: 20px;
+}
+
+#folder-display-container {
+    grid-area: folder-display;
+    margin-top: 100px;
+    border-top: 2px solid black;
+
+}
+
+.folders {
+    margin-top: 5px;
+    cursor: pointer;
+}
+
+.test {
+  background-color: blue;
+}

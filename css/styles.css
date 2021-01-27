@@ -1,0 +1,40 @@
+#window-container {
+    display: grid;
+    margin: 0;
+    width: 100%;
+    grid-template-columns: 2% 13% 75% 10%;
+    grid-template-areas: 
+        "header header header header"
+        ". leftrow body rightrow"
+        ". leftrow body rightrow"
+        ". leftrow body rightrow"
+        ". leftrow body rightrow"
+        "footer footer footer footer"
+}
+
+#header {
+    grid-area: header;
+    background-color: red;
+}
+
+#body {
+    grid-area: body;
+    min-height: 710px;
+    background-color: green;
+}
+
+#footer {
+    grid-area: footer;
+    background-color: blue;
+}
+
+#left-row {
+    grid-area: leftrow;
+    background-color: yellow;
+
+}
+
+#right-row {
+    grid-area: rightrow;
+    background-color: yellow;
+}
