@@ -7,7 +7,6 @@ let newFolder = (function newList(folderDisplay) {
     folderDisplay.appendChild(li);
     li.innerText = folderText;
     li.classList.add("folders");
-    li.dataset.indexNumber = folderArray.length-1;
 });
 let storeIndex = null;
 let menu = document.getElementById("menu");
@@ -17,8 +16,8 @@ let styleHighlightedFolder = (function styleHighlightedFolder (target) {
     target.classList.add("highlight");
     storeIndex = target;
 });
-
-let delFromList = (function delFromList(item) {
+// storeIndex in above and below needs to be changed
+let delFromList = (function delFromList() {
     storeIndex.remove();
     menu.classList.remove("active");
 });
