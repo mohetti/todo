@@ -25,7 +25,6 @@ let getLocalStorage = (function getLocalStorage() {
     let getArray = JSON.parse(storageArray);
     populateFolder(getArray);
     populateArray(getArray);
-    console.log(folderArray);
 });
 
 export {setLocalStorage, getLocalStorage};

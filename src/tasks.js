@@ -1,3 +1,4 @@
+import {folderArray} from "./folderLogic.js";
 import {setDefault, taskTitle, taskDescr, taskDate, prioHigh, prioLow, prioMed, taskNotes} from "./eventListenersModal.js";
 import {setLocalStorage} from "./localStorage.js";
 
@@ -32,5 +33,20 @@ let appendTaskToFolder = (function appendTaskToFolder(appendTo) {
         setDefault();
     });
 
+let deleteNote = (function deleteNote(event) {
+    let searchTerm = event.target.nextSibling.firstChild.nodeValue;
+    let headline = document.querySelector("#task-text").innerText;
+    let taskContainer = folderArray[folderArray.findIndex(x => x.highlight === true)];
+    let findTask = taskContainer.tasks.findIndex(x => x.title === headline);
+    let test = taskContainer.tasks[findTask].notes;
+    let smth = test.findIndex(x => x === searchTerm);
+    taskContainer.tasks[findTask].notes.splice(smth, 1);
+    setLocalStorage();
 
-export {appendTaskToFolder};
+    // Funktioniert nun besser. Aber ein Bug würde immer noch entstehen, wenn in einem Array mehrere Duplikate sind.
+    // Implementieren, dass Duplikate vermieden werden.
+    // Code schöner schreiben da oben
+
+});
+
+export {appendTaskToFolder, deleteNote};

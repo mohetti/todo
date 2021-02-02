@@ -71,6 +71,15 @@ let getTaskName = (function getTaskName(event) {
         import("./tasksDOM.js").then(open => {
             open.openTask(searchTerm)  
         });
+    } else if (event.target.id === "note-delete") {
+        // delete from Array
+        import("./tasks.js").then(delNote => {
+            delNote.deleteNote(event)  
+        });
+        //delete from display
+        import("./tasksDOM.js").then(delNote => {
+            delNote.deleteNoteFromDisplay(event)  
+        });
     };
 });
 

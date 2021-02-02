@@ -38,13 +38,12 @@ let displayTasks = (function displayTasks() {
     };
 
 });
-
 let openTask = (function openTask(searchTerm) {
     let highlightedFolder = folderArray[folderArray.findIndex(x => x.highlight === true)];
     let highlightedTasks = highlightedFolder.tasks;
+
     render();
     let obj = highlightedTasks.findIndex(x => x.title === searchTerm);
-
     let taskText = document.createElement("h2");
     taskText.id = "task-text";
     bodyDisplay.appendChild(taskText);
@@ -61,11 +60,22 @@ let openTask = (function openTask(searchTerm) {
     descrText.innerText = highlightedTasks[obj].descr;
 
     for (let i = 0; i < highlightedTasks[obj].notes.length; i++) {
+        let noteContainer = document.createElement("div");
+        noteContainer.classList.add("note-container");
+        bodyDisplay.appendChild(noteContainer);
+
+        let noteDelete = document.createElement("img");
+        noteContainer.appendChild(noteDelete);
+        noteDelete.id = "note-delete";
+        noteDelete.src="https://image.flaticon.com/icons/png/512/61/61848.png";
         let notesText = document.createElement("div");
-        notesText.classList.add("notes-text");
-        bodyDisplay.appendChild(notesText);
+        noteContainer.appendChild(notesText);
         notesText.innerText = highlightedTasks[obj].notes[i];
     }
 });
 
-export {displayTasks, render, openTask};
+let deleteNoteFromDisplay = (function deleteNoteFromDisplay(event) {
+    event.target.parentNode.remove();
+})
+
+export {displayTasks, render, openTask, deleteNoteFromDisplay};
