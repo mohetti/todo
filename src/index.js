@@ -1,5 +1,9 @@
 // npx webpack --watch
-  
+import {getLocalStorage, getArray} from "./localStorage.js";
+import {folderArray} from "./folderLogic.js";
+if (window.localStorage.length !== 0) {
+    getLocalStorage();
+}
 // 2 EventListeners: Add a new folder to the DOM-list as <li> and to the Container-Array as object
 let btnNewFolder = document.querySelector("#add-new-btn");
 import {handleNewFolder} from "./eventListeners.js"
@@ -24,3 +28,20 @@ window.addEventListener("click", function(event) {
     document.getElementById("menu").classList.remove("active");
     }
 });
+
+// open Modal to create a new task
+let btnOpenModal = document.querySelector(".open-modal");
+import {openModal, closeModal, submitTask} from "./eventListenersModal.js";
+btnOpenModal.addEventListener("click", openModal);
+
+// close Modal
+let bntCloseModal = document.querySelector(".modal-close");
+bntCloseModal.addEventListener("click", closeModal);
+
+let modalSubmit = document.querySelector("#task-subm");
+modalSubmit.addEventListener("click", submitTask);
+
+// open a  task to see it's details
+import {getTaskName} from "./eventListeners.js";
+let taskDisplay = document.querySelector("#body");
+taskDisplay.addEventListener("click", getTaskName);

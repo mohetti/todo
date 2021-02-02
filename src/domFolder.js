@@ -1,12 +1,14 @@
 import {folderArray} from "./folderLogic.js";
+import {render} from "./tasksDOM.js";
 
-let newFolder = (function newList(folderDisplay) {
+let newFolder = (function newList(folderDisplay, folderName) {
     let li = document.createElement("li");
     let folderText = folderArray[folderArray.length -1].folder;
     
     folderDisplay.appendChild(li);
     li.innerText = folderText;
     li.classList.add("folders");
+    folderName.value = "";
 });
 let storeIndex = null;
 let menu = document.getElementById("menu");
@@ -20,6 +22,7 @@ let styleHighlightedFolder = (function styleHighlightedFolder (target) {
 let delFromList = (function delFromList() {
     storeIndex.remove();
     menu.classList.remove("active");
+    render();
 });
 
 let rightClickHandler = (function rightClickHandler(event) {

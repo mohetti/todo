@@ -1,24 +1,26 @@
+// concerns folderLogic.js and domFolder.js
 let folderName = document.getElementById("new-folder");
 let folderDisplay = document.getElementById("folder-ul");
-import {folderArray} from "./folderLogic.js"
+import {folderArray} from "./folderLogic.js";
 
 let handleNewFolder = (function handleNewFolder() {
     let duplicatesTrue = folderArray.findIndex(x => x.folder === folderName.value);
-    if (duplicatesTrue === -1 || folderArray.length === 0) {
+    if (folderName.value === "") {
+        return;
+    } else if (duplicatesTrue === -1 || folderArray.length === 0) {
         // populate array with objects for each new folder
         import("./folderLogic.js").then(newFolder => {
             newFolder.pushToFolderArray(folderName);
         });
         // populate the display with one <li> for each new folder
         import("./domFolder.js").then(newEntry => {
-            newEntry.newFolder(folderDisplay);
+            newEntry.newFolder(folderDisplay, folderName);
         });
     }
 });
 
 // highlighting one folder (obj.highlight = true) and backgroundcolor = color
 let highlight = (function highlight(event) {
-    console.log(event.target);
     if (event.target.id === "folder-ul") {
         return;
     } else {
@@ -28,6 +30,9 @@ let highlight = (function highlight(event) {
         });
             import("./domFolder.js").then(highlightCSS => {
                 highlightCSS.styleHighlightedFolder(event.target);
+        });
+        import("./tasksDOM.js").then(display => {
+            display.displayTasks();
         });
     };
 });
@@ -54,5 +59,19 @@ let deleteFolder = (function deleteFolder(event) {
     });
 });
 
+let getTaskName = (function getTaskName(event) {
+    if (event.target.id === "body") {
+        return;
+    } else if (event.target.classList.contains("task-display") || 
+      event.target.parentElement.classList.contains("task-display")) {
+        let searchTerm;
+        event.target.firstChild.innerText === undefined ? searchTerm = event.target.parentElement.firstChild.innerText : 
+                                                          searchTerm = event.target.firstChild.innerText;
+        
+        import("./tasksDOM.js").then(open => {
+            open.openTask(searchTerm)  
+        });
+    };
+});
 
-export {handleNewFolder, highlight, rightClickMenu, deleteFolder};
+export {handleNewFolder, highlight, rightClickMenu, deleteFolder, getTaskName};

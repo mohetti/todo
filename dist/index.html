@@ -4,11 +4,13 @@
     <meta charset="utf-8" />
     <link rel="stylesheet" href="/css/styles.css">
     <link rel="stylesheet" href="/css/folder.css">
+    <link rel="stylesheet" href="/css/modal.css">
     <title>To Do List</title>
   </head>
   <body id="window-container">
     <div id="header">T</div>
-    <div id="body"></div>
+    <div id="body">
+    </div>
     <div id="left-row">
       <div id="folder-container">
         <div id="new-folder-container">
@@ -27,6 +29,28 @@
       <div class="right-click-item">
         <i class="fa fa-delete"></i>Delete
       </div>
+    </div>
+    <div class="modal-bg">
+      <div class="modal">
+        <h2>Commit a new Task:</h2>
+        <label for="title">Title: </label>
+        <input type="text" name="title" id="task-title" />
+        <label for="description">Description: </label>
+        <input type="text" name="description" id="task-descr"/>
+        <input type="date" name="date" id="task-date" />
+        <div>Priority: 
+          <input type="radio" name="priority" class="task-prio" id="high" />
+          <input type="radio" name="priority" class="task-prio" id="medium" />
+          <input type="radio" name="priority" class="task-prio" id="low" />
+        </div>
+        <label for="notes" id="hover-notes">Notes:</label>
+        <input type="text" name="notes" id="task-notes" />
+        <input type="submit" id="task-subm" value="Submit task" />
+        <span class="modal-close">X</span>
+      </div>
+    </div>
+    <div>
+      <input type="submit" class="open-modal" value="Create new task" class="open-modal"/>
     </div>
   <script src="main.js"></script>
   </body>

@@ -18,9 +18,9 @@
 }
 
 #body {
+    position: relative;
     grid-area: body;
     min-height: 710px;
-    background-color: green;
 }
 
 #footer {
