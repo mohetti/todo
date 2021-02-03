@@ -29,6 +29,9 @@ window.addEventListener("click", function(event) {
     }
 });
 
+import {editTaskMenu} from "./eventListeners.js";
+window.addEventListener("contextmenu", editTaskMenu);
+
 // open Modal to create a new task
 let btnOpenModal = document.querySelector(".open-modal");
 import {openModal, closeModal, submitTask} from "./eventListenersModal.js";
@@ -45,3 +48,6 @@ modalSubmit.addEventListener("click", submitTask);
 import {getTaskName} from "./eventListeners.js";
 let taskDisplay = document.querySelector("#body");
 taskDisplay.addEventListener("click", getTaskName);
+
+import {handleEdit} from "./eventListeners.js";
+window.addEventListener("click", handleEdit);

@@ -20,9 +20,20 @@ let setDefault = (function setDefault() {
 });
 
 // opens modal to create new task
+let updateArray;
+let refArray;
 let modalBg = document.querySelector(".modal-bg");
-let openModal = (function openModal() {
+let openModal = (function openModal(update, reference) {
+
+    
+    if (update === true) {
+        refArray = reference;
+        updateArray = update;
+        modalBg.classList.add("bg-active");
+        return updateArray, refArray;
+    };
     if (folderArray.findIndex(x => x.highlight === true) !== -1) {
+        setDefault();
         modalBg.classList.add("bg-active");
     };
 });
@@ -30,19 +41,27 @@ let openModal = (function openModal() {
 // closes modal
 let closeModal = (function closeModal() {
     setDefault();
+    updateArray = false;
+    refArray = false;
+    return updateArray, refArray;
 });
 // ***************************************************************************************************************************
 // submits new task
 let submitTask = (function submitTask() {
     let appendTo  = folderArray[folderArray.findIndex(x => x.highlight === true)];
     let duplicateTasks = appendTo.tasks.findIndex(x => x.title === taskTitle.value);
-    if (duplicateTasks !== -1) {
+    if (duplicateTasks !== -1 && updateArray !== true) {
         return alert("You already have a task with this title.");
     }
     if (taskTitle.value === "") {
         return alert("Please enter a title");
     } else if (prioHigh.checked === false && prioMed.checked === false && prioLow.checked === false) {
         return alert("Please choose a priority");
+    } else if (updateArray === true) {
+        import("./tasks.js").then(update => {
+            update.updateTask(appendTo, refArray);
+        });
+        updateArray = false;
     } else {
         import("./tasks.js").then(append => {
             append.appendTaskToFolder(appendTo);

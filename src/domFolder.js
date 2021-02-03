@@ -31,6 +31,15 @@ let rightClickHandler = (function rightClickHandler(event) {
         menu.classList.add("active");
 });
 
+let showModal = (function showModal() {
+    let modal = document.querySelector(".open-modal");
+    modal.style.visibility = "visible";
+});
+
+let closeModal = (function closeModal() {
+    let modal = document.querySelector(".open-modal");
+    modal.style.visibility = "hidden";
+});
 
 
-export {newFolder, styleHighlightedFolder, delFromList, rightClickHandler}
+export {newFolder, styleHighlightedFolder, delFromList, rightClickHandler, showModal, closeModal}

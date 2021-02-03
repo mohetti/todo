@@ -14,8 +14,14 @@ let priority = (function priority() {
 
 let notesArray = (function notesArray() {
     let notesArray = taskNotes.value.split(";");
-    return notesArray;
-})
+    let rmDuplicates = [...new Set(notesArray)];
+    return rmDuplicates;
+});
+
+let strikeChecked = (function strikeChecked(taskArray) {
+    let striked = taskArray.map(x => x = false);
+    return striked;
+});
 
 let appendTaskToFolder = (function appendTaskToFolder(appendTo) {
         let taskObj = {
@@ -23,7 +29,8 @@ let appendTaskToFolder = (function appendTaskToFolder(appendTo) {
             descr : taskDescr.value,
             date  : taskDate.value,
             prio  : priority(),
-            notes : notesArray()
+            notes : notesArray(),
+            strike : strikeChecked(notesArray()),
         }
         appendTo.tasks.push(taskObj);
         setLocalStorage();
@@ -33,20 +40,75 @@ let appendTaskToFolder = (function appendTaskToFolder(appendTo) {
         setDefault();
     });
 
+let updateTask = (function updateTask(appendTo, refArray) {
+    let targetTask = appendTo.tasks.findIndex(x => x.title === refArray);
+    appendTo.tasks[targetTask].title = taskTitle.value;
+    appendTo.tasks[targetTask].descr = taskDescr.value;
+    appendTo.tasks[targetTask].date = taskDate.value;
+    appendTo.tasks[targetTask].prio = priority();
+    appendTo.tasks[targetTask].notes = notesArray();
+    appendTo.tasks[targetTask].strike = strikeChecked(notesArray());
+    console.log(appendTo.tasks[targetTask].notes)
+    setLocalStorage();
+    import("./tasksDOM.js").then(rend => {
+        rend.render();
+    });
+
+    import("./tasksDOM.js").then(display => {
+        display.displayTasks();
+    });
+
+    setDefault();
+});
+
 let deleteNote = (function deleteNote(event) {
     let searchTerm = event.target.nextSibling.firstChild.nodeValue;
     let headline = document.querySelector("#task-text").innerText;
     let taskContainer = folderArray[folderArray.findIndex(x => x.highlight === true)];
     let findTask = taskContainer.tasks.findIndex(x => x.title === headline);
-    let test = taskContainer.tasks[findTask].notes;
-    let smth = test.findIndex(x => x === searchTerm);
-    taskContainer.tasks[findTask].notes.splice(smth, 1);
+    let goToNotes = taskContainer.tasks[findTask].notes;
+    let index = goToNotes.findIndex(x => x === searchTerm);
+    taskContainer.tasks[findTask].notes.splice(index, 1);
+    taskContainer.tasks[findTask].strike.splice(index, 1);
     setLocalStorage();
-
-    // Funktioniert nun besser. Aber ein Bug würde immer noch entstehen, wenn in einem Array mehrere Duplikate sind.
-    // Implementieren, dass Duplikate vermieden werden.
-    // Code schöner schreiben da oben
 
 });
 
-export {appendTaskToFolder, deleteNote};
+let deleteTask = (function deleteTask(event) {
+    let task = event.target.nextSibling.innerText;
+    let taskContainer = folderArray[folderArray.findIndex(x => x.highlight === true)];
+    let specTask = taskContainer.tasks.findIndex(x => x.title === task);
+    taskContainer.tasks.splice(specTask, 1);
+    setLocalStorage();
+});
+
+let deleteAllInArray = (function deleteAllInArray(searchTerm) {
+    let taskContainer = folderArray[folderArray.findIndex(x => x.highlight === true)];
+    let specTask = taskContainer.tasks.findIndex(x => x.title === searchTerm);
+    taskContainer.tasks.splice(specTask, 1);
+    setLocalStorage();
+})
+
+let strikeTrue = (function strikeTrue(event) {
+    let text = event.target.innerText;
+    let taskContainer = folderArray[folderArray.findIndex(x => x.highlight === true)];
+    let searchTerm = document.querySelector("#task-text").innerText;
+    let specTask = taskContainer.tasks.findIndex(x => x.title === searchTerm);
+    let index = taskContainer.tasks[specTask].notes.findIndex(x => x === text);
+    
+    taskContainer.tasks[specTask].strike[index] = true;
+    setLocalStorage();
+});
+
+let strikeFalse = (function strikeFalse(event) {
+    let text = event.target.innerText;
+    let taskContainer = folderArray[folderArray.findIndex(x => x.highlight === true)];
+    let searchTerm = document.querySelector("#task-text").innerText;
+    let specTask = taskContainer.tasks.findIndex(x => x.title === searchTerm);
+    let index = taskContainer.tasks[specTask].notes.findIndex(x => x === text);
+    
+    taskContainer.tasks[specTask].strike[index] = false;
+    setLocalStorage();
+})
+
+export {appendTaskToFolder, deleteNote, deleteTask, strikeTrue, strikeFalse, deleteAllInArray, updateTask};
